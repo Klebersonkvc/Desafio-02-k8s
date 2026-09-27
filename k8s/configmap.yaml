@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: desafio2-config
+data:
+  PORT: "3000"
+  DB_HOST: "desafio2-postgres"
+  DB_PORT: "5432"
+  DB_NAME: "desafio2_db"
+  POSTGRES_DB: "desafio2_db"

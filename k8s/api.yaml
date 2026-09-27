@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: desafio2-api
+spec:
+  type: NodePort
+  selector:
+    app: desafio2-api
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30002
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: desafio2-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: desafio2-api
+  template:
+    metadata:
+      labels:
+        app: desafio2-api
+    spec:
+      containers:
+        - name: desafio2-api
+          image: desafio2-api:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: desafio2-config
+            - secretRef:
+                name: desafio2-secret
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: "50m"
+            limits:
+              cpu: "200m"
